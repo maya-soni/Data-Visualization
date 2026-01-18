@@ -1,40 +1,38 @@
-//Start
-let data;
-let colors = ["#dcbeff", "#6C3BAA", "#ADD8E6", "#001a33"];
+let data
+let colors =['#dcbeff', '#800000','#ADD8E6', '#001a33']
 async function setup() {
   createCanvas(400, 400);
-  data = loadTable(
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMcv01vzgAHDnKvyZvjLLYxz1ib89_bkcBOm3B5YGE6aSBWg1KxajQDHIsGj49h71KO0IEBIYXaBO9/pub?gid=0&single=true&output=csv",
-    "csv",
-    "header"
-  );
-  console.log(data);
+  data = await
+  loadTable('https://docs.google.com/spreadsheets/d/e/2PACX-1vQMcv01vzgAHDnKvyZvjLLYxz1ib89_bkcBOm3B5YGE6aSBWg1KxajQDHIsGj49h71KO0IEBIYXaBO9/pub?gid=0&single=true&output=csv',',', 'header')
+  console.log (data)
 }
 
 function draw() {
   background(220);
-  if (!data) return;
-  for (let i = 0; i < data.getRowCount(); i++) {
-    let row = data.getRow(i);
-    // loop over the columns
-    for (let c = 1; c < 5; c++) {
-      let flannelCount = row.getNum(c);
+ if (!data) return;
+ for (let i = 0; i < data.getRowCount (); i++) {
+   let row = data.getRow(i);
+   // loop over the columns
+   for( let c = 1; c <= 5; c++ ) {
+     let flannelCount = row.getNum(c);
+     let yPos = 50 + (i * 60);
+     let xStart = 50 + (c*60);
+     
+     stroke (colors [(c - 1) % colors.length]);
+     strokeWeight(5);
+     for (let j = 0; j < flannelCount; j++) {
+       let tallyX = xStart + (j * 12);
+       if ((j+1) % 5 === 0) {
+         //every 5th mark is horizontal
+         line (tallyX, yPos, tallyX, yPos + 20 ) ; 
 
-      let yPos = 50 + i * 60;
-      let xStart = 50 + c * 60;
-      stroke(colors[i % colors.length]);
-      strokeWeight(5);
-      for (let j = 0; j < flannelCount; j++) {
-        let tallyX = xStart + j * 12;
-        if ((j + 1) % 5 === 0) {
-          //every 5th mark is horizontal
-          //line (tallyX, yPos, tallyX, yPos + 20 ) ;
-        } else {
-          line(tallyX, 50, tallyX, 150);
-        }
-      }
-    }
+       } else {
+         line (tallyX, 50, tallyX,150);
+       }
+     }     
+   }
+
+ }
   }
-}
-//end
+//once the lines are there try to make them not uniformally slanted
 
