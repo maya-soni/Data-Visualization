@@ -13,26 +13,34 @@ function draw() {
  for (let i = 0; i < data.getRowCount (); i++) {
    let row = data.getRow(i);
    // loop over the columns
+   
    for( let c = 1; c <= 5; c++ ) {
      let flannelCount = row.getNum(c);
      let yPos = 50 + (i * 60);
-     let xStart = 50 + (c*60);
+     let xStart = 50 + (c * 35);
      
      stroke (colors [(c - 1) % colors.length]);
-     strokeWeight(5);
+     strokeWeight(3);
+     
      for (let j = 0; j < flannelCount; j++) {
-       let tallyX = xStart + (j * 12);
+       let groupOffset = Math.floor (j / 5) * 15;
+       let tallyX = xStart + (j * 8) + groupOffset;
+       let tallyHeight = 20;
+       
        if ((j+1) % 5 === 0) {
+         let groupStartX = tallyX - (4 * 8);
          //every 5th mark is horizontal
-         line (tallyX, yPos, tallyX, yPos + 20 ) ; 
+         line (groupStartX - 2, yPos + 10, tallyX + 2, yPos + 12); 
 
        } else {
-         line (tallyX, 50, tallyX,150);
+         line (tallyX, yPos, tallyX, yPos + tallyHeight);
        }
      }     
    }
 
  }
+  }
+//once the lines are there try to make them not uniformally slanted
   }
 //once the lines are there try to make them not uniformally slanted
 
