@@ -17,7 +17,7 @@ function draw() {
    for( let c = 1; c <= 5; c++ ) {
      let flannelCount = row.getNum(c);
      let yPos = 50 + (i * 60);
-     let xStart = 50 + (c * 35);
+     let xStart = 50 + (c * 45);
      
      stroke (colors [(c - 1) % colors.length]);
      strokeWeight(3);
@@ -39,8 +39,6 @@ function draw() {
    }
 
  }
-  }
-//once the lines are there try to make them not uniformally slanted
   }
 //once the lines are there try to make them not uniformally slanted
 
