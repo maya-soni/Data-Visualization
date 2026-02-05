@@ -1,61 +1,54 @@
-let data
-let colors =['#dcbeff', '#800000','#ADD8E6', '#001a33']
+let data;
+let colors = ["#dcbeff", "#9D00FF", "#ADD8E6", "#00008B"];
 async function setup() {
   createCanvas(400, 400);
-  data = await
-  loadTable('https://docs.google.com/spreadsheets/d/e/2PACX-1vQMcv01vzgAHDnKvyZvjLLYxz1ib89_bkcBOm3B5YGE6aSBWg1KxajQDHIsGj49h71KO0IEBIYXaBO9/pub?gid=0&single=true&output=csv',',', 'header')
-  console.log (data)
+  data = await loadTable(
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMcv01vzgAHDnKvyZvjLLYxz1ib89_bkcBOm3B5YGE6aSBWg1KxajQDHIsGj49h71KO0IEBIYXaBO9/pub?gid=0&single=true&output=csv",
+    ",",
+    "header"
+  );
 }
 
 function draw() {
-  background('#FFFFFF');
- if (!data) return;
- for (let i = 0; i < data.getRowCount (); i++) {
-   let row = data.getRow(i);
-   // loop over the columns
-   
-   for( let c = 1; c <= 5; c++ ) {
-     let flannelCount = row.getNum(c);
-     let yPos = 50 + (i * 60);
-     let xStart = 50 + (c * 45);
-     
-     stroke (colors [(c - 1) % colors.length]);
-     strokeWeight(3);
-     
-     for (let j = 0; j < flannelCount; j++) {
-       let groupOffset = Math.floor (j / 5) * 15;
-       let tallyX = xStart + (j * 8) + groupOffset;
-       let tallyHeight = 20;
-       
-       if ((j+1) % 5 === 0) {
-         let groupStartX = tallyX - (4 * 8);
-         //every 5th mark is horizontal
-         line (groupStartX - 2, yPos + 10, tallyX + 2, yPos + 12); 
+  background("#FFFFFF");
+  // if (!data) return;
+  //console.log(data.getRowCount());
+  // let i = 0;
+  // for( let row of data.getRows() ) {
+  for (let i = 0; i < data.getRowCount(); i++) {
+    let row = data.getRow(i);
+    // loop over the columns
+    //console.log(i);
+    for( let c = 1; c <data.getColumnCount(); c++ ) {
+      // let c =1;
+      let columnCount = row.getNum(c);
+      let yPos = 50 + i * 60;
+      let xStart = 50 + c * 45;
+      // console.log(columnCount)
+      stroke(colors[(c - 1) % colors.length]);
+      strokeWeight(3);
 
-       } else {
-         line (tallyX, yPos, tallyX, yPos + tallyHeight);
-       }
-     }     
-   }
+      for (let j = 0; j < columnCount; j++) {
+        let tallyX = xStart + j * 8;
+        let tallyHeight = 20;
+        // console.log( yPos, tallyX )
+        if ((j + 1) % 5 === 0) {
+          let groupStartX = tallyX - 4 * 8;
+          // console.log(groupStartX)
+          //every 5th mark is horizontal
+                  console.log(groupStartX,tallyX, tallyHeight, columnCount, yPos,xStart,c)
 
- }
+          line(groupStartX - 2, yPos + 10, tallyX + 2, yPos + 12);
+        } else {
+                  console.log(tallyX, tallyHeight, columnCount, yPos,xStart,c)
+
+          line(tallyX, yPos, tallyX, yPos + tallyHeight);
+        }
+      }
+    }
   }
-//HTML FILE
-=<!DOCTYPE html>
-<html lang="en"><head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@2.0.5/lib/p5.js"></script>
-    
-    
-    
-    
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta charset="utf-8">
+}
 
-  </head>
-  <body>
-    <main>
-    </main>
-    <script src="sketch.js"></script>
   
 
 </body></html>
